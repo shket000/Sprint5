@@ -47,10 +47,6 @@ func (t *Training) Parse(datastring string) (err error) {
 }
 
 func (t Training) ActionInfo() (string, error) {
-	//if t.TrainingType != "Бег" || t.TrainingType != "Ходьба" {
-	//	log.Println("неизвестный тип тренировки")
-	//	return "", errors.New("неизвестный тип тренировки")
-	//}
 	dur := float64(t.Duration.Hours())
 	//durs:=fmt.Sprintf("%.2f", dur)
 	dist := spentenergy.Distance(t.Steps, t.Height)
@@ -65,12 +61,6 @@ func (t Training) ActionInfo() (string, error) {
 		log.Println(err)
 		return "", err
 	}
-	//if t.TrainingType == "Бег" {
-	//	return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", t.TrainingType, dur, dist, speed, callRun), nil
-	//}
-	//if t.TrainingType == "Ходьба" {
-	//	return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", t.TrainingType, dur, dist, speed, callWalk), nil
-	//}
 
 	switch t.TrainingType {
 	case "Бег":

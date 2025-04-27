@@ -52,11 +52,6 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 
 func (ds DaySteps) ActionInfo() (string, error) {
 	dist := spentenergy.Distance(ds.Steps, ds.Height)
-	//callRun, err := spentenergy.RunningSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
-	//if err != nil {
-	//	log.Println(err)
-	//	return "", err
-	//}
 	if ds.Steps <= 0 {
 		log.Println("Steps is invalid")
 		return "", errors.New("steps is invalid")
