@@ -3,12 +3,13 @@ package trainings
 import (
 	"errors"
 	"fmt"
-	"github.com/Yandex-Practicum/tracker/internal/personaldata"
-	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 	"log"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/Yandex-Practicum/tracker/internal/personaldata"
+	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 )
 
 type Training struct {
@@ -59,16 +60,24 @@ func (t Training) ActionInfo() (string, error) {
 		log.Println(err)
 		return "", err
 	}
-	callWalk, err2 := spentenergy.WalkingSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
-	if err2 != nil {
-		log.Println(err2)
-		return "", err2
+	callWalk, err := spentenergy.WalkingSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
+	if err != nil {
+		log.Println(err)
+		return "", err
 	}
-	if t.TrainingType == "Бег" {
+	//if t.TrainingType == "Бег" {
+	//	return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", t.TrainingType, dur, dist, speed, callRun), nil
+	//}
+	//if t.TrainingType == "Ходьба" {
+	//	return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", t.TrainingType, dur, dist, speed, callWalk), nil
+	//}
+
+	switch t.TrainingType {
+	case "Бег":
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", t.TrainingType, dur, dist, speed, callRun), nil
-	}
-	if t.TrainingType == "Ходьба" {
+	case "Ходьба":
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", t.TrainingType, dur, dist, speed, callWalk), nil
+	default:
+		return "", errors.New("unknown training type")
 	}
-	return "", errors.New("<UNK>")
 }
